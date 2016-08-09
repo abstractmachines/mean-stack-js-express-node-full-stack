@@ -9,11 +9,11 @@ app.get('/', function( req, res )
 	res.send('Hello World! Wesley Willis approved.');
 });
 
-var x = 3001;
+var port = 3001;
 
-app.listen( x, function()
+app.listen( port, function()
 {
-	console.log('Example app is now listening on port' + x + ', sucka!');
+	console.log('Example app is now listening on port' + port + ', sucka!');
 });
 
 // this app starts a server and listens on port 3000 for connections.
