@@ -1,6 +1,4 @@
-
-
-
+'use strict'
 
 var express = require('express');
 
@@ -11,9 +9,11 @@ app.get('/', function( req, res )
 	res.send('Hello World! Wesley Willis approved.');
 });
 
-app.listen( 3000, function()
+var x = 3001;
+
+app.listen( x, function()
 {
-	console.log('Example app is now listening on port 3000, sucka!');
+	console.log('Example app is now listening on port' + x + ', sucka!');
 });
 
 // this app starts a server and listens on port 3000 for connections.
