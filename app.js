@@ -1,19 +1,25 @@
 'use strict'
 
+// var express = require('express');
+
 var express = require('express');
 
 var app = express();
+
+var pid = require('process');
 
 app.get('/', function( req, res )
 {
 	res.send('Hello World! Wesley Willis approved.');
 });
 
-var port = 3001;
+var port = 3000;
 
 app.listen( port, function()
 {
 	console.log('Example app is now listening on port' + port + ', sucka!');
+	console.log( pid.env );
+
 });
 
 // this app starts a server and listens on port 3000 for connections.
