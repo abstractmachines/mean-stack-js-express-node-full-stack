@@ -4,7 +4,7 @@ var express = require('express');
 
 var app = express();
 
-var pid = require('process');
+var process = require('process');
 
 app.get('/', function( req, res )
 {
@@ -13,10 +13,10 @@ app.get('/', function( req, res )
 
 var port = 3000;
 
-app.listen( port, function()
+app.listen( process, function()
 {
 	console.log('Example app is now listening on port' + port + ', sucka!');
-	console.log( pid.env );
+	console.log( process.env );
 
 });
 
