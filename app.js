@@ -13,10 +13,10 @@ app.get('/', function( req, res )
 
 var port = 3000;
 
-app.listen( process, function()
+app.listen( port, function()
 {
 	console.log('Example app is now listening on port' + port + ', sucka!');
-	console.log( process.env );
+	console.log( process.env.port );
 
 });
 
