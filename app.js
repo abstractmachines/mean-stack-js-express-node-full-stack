@@ -20,6 +20,17 @@ app.get('/', function( req, res )
 	res.send('Hello World! Wesley Willis approved.');
 });
 
+app.post('/foo', function( req, res )
+{
+	res.send('THis is a foo thing.');
+	console.log( req.name );
+});
+
+// send an HTTP POST request via command line:
+//$ curl --request POST -v http://localhost:5000/foo
+// curl --request POST -v -d "name=brian" http://localhost:5000/foo
+
+
 var port = ( process.env.PORT || 3000 );
 
 // app.listen( port, function()
