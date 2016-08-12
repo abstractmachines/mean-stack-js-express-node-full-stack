@@ -4,33 +4,19 @@
 // The app responds with a hello world! for requests to the root URL or ROUTE.
 // For every other path, it will respond with a 404, not found.
 
-
 // run this app with the following commands:
 // default: $ node app.js
 // Other instances with named port(s): $ PORT=5000 node app.js
 
+// these 2 lines create an express application:
 var express = require('express');
 
-var app = express();
+var app = express(); // express(): function exported by the express module.
 
-var process = require('process');
+// process in express returns the running process' (express') related properties
+var process = require('process'); // env variables from CLI
 
-app.get('/', function( req, res )
-{
-	res.send('Hello World! Wesley Willis approved.');
-});
-
-app.post('/foo', function( req, res )
-{
-	res.send('THis is a foo thing.');
-	console.log( req.name );
-});
-
-// send an HTTP POST request via command line:
-//$ curl --request POST -v http://localhost:5000/foo
-// curl --request POST -v -d "name=brian" http://localhost:5000/foo
-
-
+// parameterize the app + default fallback:
 var port = ( process.env.PORT || 3000 );
 
 // app.listen( port, function()
@@ -41,3 +27,24 @@ var port = ( process.env.PORT || 3000 );
 // });
 
 app.listen( port );
+
+// HTTP METHODS: server.METHOD()
+app.get('/', function( req, res )
+{
+	res.send('Hello World! Wesley Willis approved.');
+});
+
+// client/curl sends POST to /foo. Request includes string name in body.
+
+// while app is running, send an HTTP POST request via command line:
+//$ curl --request POST -v http://localhost:5000/foo
+// curl --request POST -v -d name=brian http://localhost:5000/foo
+app.post('/foo', function( req, res )
+{
+	res.send('This is a foo thing. Here is request.property stuff.');
+	console.log( req.name ); // this has no effect
+	console.log( name ); // this has no effect
+});
+
+
+// log the request body on the server side.
