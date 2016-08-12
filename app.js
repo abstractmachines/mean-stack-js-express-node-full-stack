@@ -42,8 +42,8 @@ app.get('/', function( req, res )
 app.post('/foo', function( req, res )
 {
 	res.send('This is a foo thing. Here is request.property stuff.');
-	console.log( req.name ); // this has no effect
-	console.log( name ); // this has no effect
+	console.log( req.name ); // one of these prints POST to console. sometimes.
+	console.log( name ); // this has no effect .. OR DOES IT
 });
 
 
