@@ -35,9 +35,9 @@ app.get('/', function( req, res )
 });
 
 // for logging request's body in cURL POST request:
-var bodyParser = require( 'body-parser' );
-
-app.use( bodyParser.text() )
+// var bodyParser = require( 'body-parser' );
+//
+// app.use( bodyParser.text() );
 
 // client/curl sends POST to /foo. Request includes string name in body.
 
@@ -48,12 +48,12 @@ app.post('/foo', function( req, res )
 {
 	res.send('This is a foo thing. Here is request.property stuff.\n');
 
-	console.log( req.body );
+	// console.log( req.body );
 
 	// res.text( req.body );
 
 	// console.log( req.name ); // one of these prints POST to console. sometimes.
-
+	//
 	// console.log( name ); // this has no effect .. OR DOES IT
 });
 
