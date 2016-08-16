@@ -9,12 +9,12 @@
 // Other instances with named port(s): $ PORT=5000 node app.js
 
 // these 2 lines create an express application:
-var express = require('express');
+var express = require( 'express' );
 
 var app = express(); // express(): function exported by the express module.
 
 // process in express returns the running process' (express') related properties
-var process = require('process'); // env variables from CLI
+var process = require( 'process' ); // env variables from CLI
 
 // parameterize the app + default fallback:
 var port = ( process.env.PORT || 3000 );
@@ -34,6 +34,11 @@ app.get('/', function( req, res )
 	res.send('Hello World! Wesley Willis approved.');
 });
 
+// for logging request's body in cURL POST request:
+var bodyParser = require( 'body-parser' );
+
+app.use( bodyParser.text(); )
+
 // client/curl sends POST to /foo. Request includes string name in body.
 
 // while app is running, send an HTTP POST request via command line:
@@ -42,8 +47,10 @@ app.get('/', function( req, res )
 app.post('/foo', function( req, res )
 {
 	res.send('This is a foo thing. Here is request.property stuff.\n');
-	console.log( req.name ); // one of these prints POST to console. sometimes.
-	console.log( name ); // this has no effect .. OR DOES IT
+
+	// console.log( req.name ); // one of these prints POST to console. sometimes.
+
+	// console.log( name ); // this has no effect .. OR DOES IT
 });
 
 // log the request body on the server side.
