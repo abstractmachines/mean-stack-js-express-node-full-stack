@@ -41,10 +41,9 @@ app.get('/', function( req, res )
 // curl --request POST -v -d name=brian http://localhost:5000/foo
 app.post('/foo', function( req, res )
 {
-	res.send('This is a foo thing. Here is request.property stuff.');
+	res.send('This is a foo thing. Here is request.property stuff.\n');
 	console.log( req.name ); // one of these prints POST to console. sometimes.
 	console.log( name ); // this has no effect .. OR DOES IT
 });
-
 
 // log the request body on the server side.
