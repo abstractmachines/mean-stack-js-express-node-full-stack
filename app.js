@@ -29,7 +29,7 @@
 	* -d data=variable in the server response (the POST handler below):
   *
 	* $ curl -X POST -d name=radsauce http://localhost:3100/foo -v
-  * -H "Content-Type: text/plain"
+  * -H "Content-Type: text/plain" 
   *
   * The above changes existing Content-Type HTTP header to send a MIME type /
   * data type message of plain text. (Default is urlencoded).
