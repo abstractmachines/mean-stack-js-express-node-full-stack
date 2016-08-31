@@ -1,3 +1,3 @@
 #!/bin/bash
 
-curl --request POST -data name=radsauce http://localhost:3100/foo -v
+curl --request POST -d name=radsauce http://localhost:3100/foo -H "Content-Type: text/plain"
