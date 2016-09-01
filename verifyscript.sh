@@ -4,12 +4,13 @@ OUTPUT="$(curl --request POST -d radsauce http://localhost:3100/foo -H "Content-
 
 echo "${OUTPUT}"
 #
-# if[ "$OUTPUT" == 'radsauce' ];
-#
-# then
-# echo "gimme things 'cause it's the same.";
-#
-# fi
+if [ "${OUTPUT}" = "radsauce" ];
+
+then
+
+  echo "gimme things 'cause it's the same: OUTPUT is ${OUTPUT}";
+
+fi
 
 #else
 #echo "nope failure";
