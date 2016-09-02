@@ -7,6 +7,7 @@
 #terminal 2:  ./verifyscript.sh && echo "it worked" || echo "fail"
 #expected output:
 # radsauce
+# success, child process exit code 0: OUTPUT is radsauce
 # it worked
 
 OUTPUT="$(curl --request POST -d radsauce http://localhost:3100/foo -H "Content-Type: text/plain" 2>/dev/null )"
