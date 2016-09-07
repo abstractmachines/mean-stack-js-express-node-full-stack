@@ -2,13 +2,13 @@
   "name": "helloworld",
   "version": "1.0.0",
   "description": "a first Express.js project. August 7th 2016, AF.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "github.com/abstractmachines/express1"
   },
   "author": "A. Falke",
   "license": "ISC",
