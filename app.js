@@ -28,7 +28,7 @@
 	* header to plain text, and verify the output by echoing the
 	* -d data=variable in the server response (the POST handler below):
   *
-	* $ curl -X POST -d name=radsauce http://localhost:3100/foo 
+	* $ curl -X POST -d name=radsauce http://localhost:3100/foo
   * -H "Content-Type: text/plain"
   *
   * The above changes existing Content-Type HTTP header to send a MIME type /
