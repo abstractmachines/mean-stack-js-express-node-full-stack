@@ -1,16 +1,18 @@
 {
   "name": "helloworld",
   "version": "1.0.0",
-  "description": "a first Express.js project. August 7th 2016, AF.",
+  "description": "a first Express.js project...",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "start_0": "node app.js",
-    "start_1": "PORT=3100 node app.js"
+    "start_1": "PORT=3100 node app.js",
+    "test": "mocha",
+    "scp": "scpscript.sh"
   },
   "repository": {
     "type": "git",
-    "url": "github.com/abstractmachines/express1"
+    "url": "github.com/abstractmachines/mean-stack-js-express-node-full-stack"
   },
   "author": "A. Falke",
   "license": "ISC",
