@@ -1,5 +1,7 @@
 'use strict'
 
+// Educational MEAN full stack "vertical slice" app.
+
 // this app starts a server and listens on port for connections.
 // The app responds with a hello world! for requests to the root URL or ROUTE.
 // For every other path, it will respond with a 404, not found.
