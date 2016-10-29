@@ -159,8 +159,8 @@ Response received:
 
 			name=GobBluthBeesHowHardCanItBe
 
-<strong>
-Success!</strong>
+
+Success!
 
 Next step: MONGO.
 
