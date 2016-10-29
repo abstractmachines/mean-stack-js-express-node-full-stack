@@ -102,17 +102,17 @@ Check the user group.
 <strong>Fourth, you have to spin up a service by hand on the AWS EC2 Ubuntu instance using upstart daemon, make it executable, and set the proper Linux run levels. Of course, a sudoer must complete all of these tasks, not your deploy user. You're replacing the start-at-boot init.d daemon with one of your own!</strong>
 
 Create the conf file: Where nodeapp is the name of your app's directory:
-  ```
+
  		/etc/init/nodeapp.conf
-		```
+
 
 Make it executable for the user group containing the www-data and your deploy users:
 
   ```
  		$ chmod u+x conf-file // similar to this
-    ```
+
  Set the proper Linux runlevels. Odd levels are for shutdown-related stuff, and even levels are for startup-related stuff. You'll also need to  setuid to your deploy user and set the proper directory :
- 
+
  		///etc/init/nodeapp.conf FILE:
 
 		description "my rad daemon"
