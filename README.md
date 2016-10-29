@@ -125,14 +125,16 @@ Make it executable for the user group containing the www-data and your deploy us
 		setuid deploy
 		chdir /home/sudousername/yourappdirectory
 		exec node app.js
-		```
+	```
 
- Reboot the web server:   
+ Reboot the web server:  
+
  ```
  $ sudo nginx -s reload
  ```
 
  Spawn the daemon:   
+ 
  ```
  $ sudo service nodeapp start
  ```
@@ -142,7 +144,7 @@ Make it executable for the user group containing the www-data and your deploy us
   ```
 	$ npm run deploy
 	```
-	
+
 <strong>will deploy changes.
 
 
