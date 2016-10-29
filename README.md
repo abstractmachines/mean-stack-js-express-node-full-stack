@@ -44,7 +44,7 @@ Hand out a public IP which can be hit with a curl request.
 
 8. Deploy on AWS Linux Ubuntu EC2 VM instance.
 <br><br> <strong>First you have to install Node: </strong> <br>
-Install Node using nvm to manage specific versions of Node rather than using Debian's apt-get package manager:
+I chose to install Node on AWS using nvm instead of using Debian's apt-get package manager to install Node. That's because nvm helps you manage specific versions of Node on a per-project basis. As with all npm-related projects, the point of a per-project package manager includes project-directory installations of software packages/versions *instead of global installs.*
 
 		 $ nvm script
 		// To verify installed version:
@@ -56,21 +56,35 @@ Install Node using nvm to manage specific versions of Node rather than using Deb
 		// Now, to USE that Node version:
 		$ nvm use
 
- <strong>Second, install a web server, and I chose nginx over Apache: </strong> <br>Install all related software by hand using Debian distribution's package manager tools apt-get.
- 
+ <strong>Second, you'll need to install a web server. I chose nginx instead of Apache or other options, and I installed it using Debian (Ubuntu) Linux's distribution's package manager tools apt-get. </strong> The point here is that we are managing our own installations rather than always using installers providers give us. It's always best to spin things up by hand so you learn the underlying logic/tech. MAGIC BAD.
+
 		$ apt-get install nginx // or similar
-		// you can start and stop signals as such:
+		// you can start and stop nginx signals as such:
 		$ sudo service yourappdirectory start
 		$ sudo nginx -s reload
 
- <strong>Third, you have to set up the proper users, groups, and permissions: </strong><br> Set and manage shell users and permissions on EC2 instance. Your deploy user cannot be a sudo-er. You want to restrict permissions and be conservative. All users should be logging in with public/private keys, not with passwords. To do this, you will need to work with nginx's <strong>sshd_config</strong> file to 1. temporarily enable password logins to set the proper public/private keys by 2. copying them via  <strong>ssh-copy-id.</strong> 3. Once you're done setting up keys and access on the server, ensure that you disable password authentication (change it to no in aforementioned server settings). 4. Try it out, you should be able to shell in without passwords. 5. Note that the <strong>USER GROUP for your deploy user,</strong> and it should be in the <strong> same user group as www-data.</strong> Set permissions as required, and remember, permissions are conservative, and restricted.
+ Note that with the above, yourappdirectory will read nodeapp for us in the future.
 
- <strong>Fourth, you have to spin up a service by hand on the AWS EC2 Ubuntu instance using upstart daemon, make it executable, and set the proper Linux run levels. Of course, a sudoer must complete all of these tasks, not your deploy user. You're replacing the start-at-boot init.d daemon with one of your own!</strong><br>
+  <strong>Third, you have to set up the proper users, groups, and permissions. </strong>
+	 Set and manage shell users and permissions on EC2 instance. Your deploy user cannot be a sudo-er. You want to restrict permissions and be conservative. All users should be logging in with public/private keys, not with passwords.
+
+	 To do this, you will need to work with nginx's <strong>sshd_config</strong> file to:
+	 1. temporarily enable password logins (change "no" to "yes") to set the proper public/private keys by
+	 2. copying the keys from local to AWS via  <strong>ssh-copy-id.</strong>
+	 3. Once you're done setting up keys and access on the server, ensure that you disable password authentication (change it to no in aforementioned server settings).
+	 4. Try it out, you should be able to shell in without passwords.
+	 5. Note that the <strong>USER GROUP for your deploy user,</strong> and it should be in the <strong> same user group as www-data.</strong>
+
+	 Set permissions as required, and remember, permissions are conservative, and restricted.
+
+ <strong>Fourth, you have to spin up a service by hand on the AWS EC2 Ubuntu instance using upstart daemon, make it executable, and set the proper Linux run levels. Of course, a sudoer must complete all of these tasks, not your deploy user. You're replacing the start-at-boot init.d daemon with one of your own!</strong>
 
  Create the conf file: Where nodeapp is the name of your app's directory:
+
  		/etc/init/nodeapp.conf
 
  Make it executable for the user group containing the www-data and your deploy users:
+
  		$ chmod u+x conf-file // similar to this
 
  Set the proper Linux runlevels. Odd levels are for shutdown-related stuff, and even levels are for startup-related stuff. You'll also need to  setuid to your deploy user and set the proper directory :
