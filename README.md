@@ -89,25 +89,30 @@ I chose to install Node on AWS using nvm instead of using Debian's apt-get packa
 	```
 		$ sudo useradd gobbluth
 ```
- Check the user group.
-	```
+
+Check the user group.
+
+
+```
 		$ sudo id gobbluth
 ```
+
   Add user to appropriate group. I can't remember this step, but it involves something like this: http://www.howtogeek.com/50787/add-a-user-to-a-group-or-second-group-on-linux/.
 
-	<strong>Fourth, you have to spin up a service by hand on the AWS EC2 Ubuntu instance using upstart daemon, make it executable, and set the proper Linux run levels. Of course, a sudoer must complete all of these tasks, not your deploy user. You're replacing the start-at-boot init.d daemon with one of your own!</strong>
+<strong>Fourth, you have to spin up a service by hand on the AWS EC2 Ubuntu instance using upstart daemon, make it executable, and set the proper Linux run levels. Of course, a sudoer must complete all of these tasks, not your deploy user. You're replacing the start-at-boot init.d daemon with one of your own!</strong>
 
-	Create the conf file: Where nodeapp is the name of your app's directory:
+Create the conf file: Where nodeapp is the name of your app's directory:
   ```
  		/etc/init/nodeapp.conf
 		```
 
-		Make it executable for the user group containing the www-data and your deploy users:
+Make it executable for the user group containing the www-data and your deploy users:
+
   ```
  		$ chmod u+x conf-file // similar to this
     ```
  Set the proper Linux runlevels. Odd levels are for shutdown-related stuff, and even levels are for startup-related stuff. You'll also need to  setuid to your deploy user and set the proper directory :
-    ```
+   ```
  		///etc/init/nodeapp.conf FILE:
 
 		description "my rad daemon"
@@ -123,16 +128,21 @@ I chose to install Node on AWS using nvm instead of using Debian's apt-get packa
 		```
 
  Reboot the web server:   
-		 $ sudo nginx -s reload
+ ```
+ $ sudo nginx -s reload
+ ```
 
  Spawn the daemon:   
-
-		$ sudo service nodeapp start
-
+ ```
+ $ sudo service nodeapp start
+ ```
 
 <strong>the npm script
 
-    	$ npm run deploy
+  ```
+	$ npm run deploy
+	```
+	
 <strong>will deploy changes.
 
 
