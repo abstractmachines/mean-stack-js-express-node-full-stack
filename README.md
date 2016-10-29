@@ -111,6 +111,8 @@ Make it executable for the user group containing the www-data and your deploy us
 
   ```
  		$ chmod u+x conf-file // similar to this
+		```
+		
 
  Set the proper Linux runlevels. Odd levels are for shutdown-related stuff, and even levels are for startup-related stuff. You'll also need to  setuid to your deploy user and set the proper directory :
 
