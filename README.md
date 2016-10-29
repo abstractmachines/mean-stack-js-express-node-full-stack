@@ -45,6 +45,7 @@ Hand out a public IP which can be hit with a curl request.
 8. Deploy on AWS Linux Ubuntu EC2 VM instance.
 <br><br> <strong>First you have to install Node: </strong> <br>
 Install Node using nvm to manage specific versions of Node rather than using Debian's apt-get package manager:
+
 		 $ nvm script
 		// To verify installed version:
 		$ command -v nvm
@@ -56,6 +57,7 @@ Install Node using nvm to manage specific versions of Node rather than using Deb
 		$ nvm use
 
  <strong>Second, install a web server, and I chose nginx over Apache: </strong> <br>Install all related software by hand using Debian distribution's package manager tools apt-get.
+ 
 		$ apt-get install nginx // or similar
 		// you can start and stop signals as such:
 		$ sudo service yourappdirectory start
