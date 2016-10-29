@@ -79,16 +79,17 @@ I chose to install Node on AWS using nvm instead of using Debian's apt-get packa
 
 	 Here are some details on the user management I did:
 
-	<strong>To see what users are on Debian:</strong>
+	To see what users are on Debian:
 
-	   ```
+
 		 $ cat /etc/passwd
-		 ```
 
-		 <strong>To add a user,</strong> You can use the commands <strong>useradd</strong> or <strong>adduser.</strong> *"On Debian, administrators should usually <strong>use adduser(8)</strong> instead"* (http://askubuntu.com/questions/345974/what-is-the-difference-between-adduser-and-useradd). We will make a new user for GOB Bluth.
-	```
+
+<strong>To add a user,</strong> You can use the commands <strong>useradd</strong> or <strong>adduser.</strong> *"On Debian, administrators should usually <strong>use adduser(8)</strong> instead"* (http://askubuntu.com/questions/345974/what-is-the-difference-between-adduser-and-useradd). We will make a new user for GOB Bluth.
+
+
 		$ sudo useradd gobbluth
-```
+
 
 Check the user group.
 
