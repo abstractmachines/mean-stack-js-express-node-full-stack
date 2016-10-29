@@ -129,21 +129,21 @@ Make it executable for the user group containing the www-data and your deploy us
 
  Reboot the web server:  
 
- ```
- $ sudo nginx -s reload
- ```
+
+ 		$ sudo nginx -s reload
+
 
  Spawn the daemon:   
- 
- ```
- $ sudo service nodeapp start
- ```
+
+
+ 		$ sudo service nodeapp start
+
 
 <strong>the npm script
 
-  ```
+
 	$ npm run deploy
-	```
+
 
 <strong>will deploy changes.
 
