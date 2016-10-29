@@ -100,6 +100,8 @@ Check the user group.
 
   Add user to appropriate group. I can't remember this step, but it involves something like this: http://www.howtogeek.com/50787/add-a-user-to-a-group-or-second-group-on-linux/.
 
+After you add a user, set a password for that user, and add the user to the appropriate group, you'll need to copy the public key for that user to the authorized keys directory for that user. *Check back with the numbered list items for user management above to ensure you went through all the steps. If you want another user to assume deploy, you'll have to copy that user's public key into the authorized_keys file for that user. Note that we normally wouldn't have a user deploying code, we'd use Jenkins or similar CI.* 
+
 <strong>Fourth, you have to spin up a service by hand on the AWS EC2 Ubuntu instance using upstart daemon, make it executable, and set the proper Linux run levels. Of course, a sudoer must complete all of these tasks, not your deploy user. You're replacing the start-at-boot init.d daemon with one of your own!</strong>
 
 Create the conf file: Where nodeapp is the name of your app's directory:
@@ -112,7 +114,7 @@ Make it executable for the user group containing the www-data and your deploy us
   ```
  		$ chmod u+x conf-file // similar to this
 		```
-		
+
 
  Set the proper Linux runlevels. Odd levels are for shutdown-related stuff, and even levels are for startup-related stuff. You'll also need to  setuid to your deploy user and set the proper directory :
 
