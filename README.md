@@ -139,14 +139,13 @@ Make it executable for the user group containing the www-data and your deploy us
 
  		$ sudo service nodeapp start
 
-
-<strong>the npm script
-
-
-	$ npm run deploy
+the npm script
 
 
-<strong>will deploy changes.
+ 	$ npm run deploy
+
+
+will deploy changes.
 
 
 # Final result: public IP and curl results for AWS:
