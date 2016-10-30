@@ -100,7 +100,7 @@ Check the user group.
 
   Add user to appropriate group. I can't remember this step, but it involves something like this: http://www.howtogeek.com/50787/add-a-user-to-a-group-or-second-group-on-linux/.
 
-After you add a user, set a password for that user, and add the user to the appropriate group, you'll need to copy the public key for that user to the authorized keys directory for that user. *Check back with the numbered list items for user management above to ensure you went through all the steps. If you want another user to assume deploy, you'll have to copy that user's public key into the authorized_keys file for that user. Note that we normally wouldn't have a user deploying code, we'd use Jenkins or similar CI.* 
+After you add a user, set a password for that user, and add the user to the appropriate group, you'll need to copy the public key for that user to the authorized keys directory for that user. *Check back with the numbered list items for user management above to ensure you went through all the steps. If you want another user to assume deploy, you'll have to copy that user's public key into the authorized_keys file for that user. Note that we normally wouldn't have a user deploying code, we'd use Jenkins or similar CI.*
 
 <strong>Fourth, you have to spin up a service by hand on the AWS EC2 Ubuntu instance using upstart daemon, make it executable, and set the proper Linux run levels. Of course, a sudoer must complete all of these tasks, not your deploy user. You're replacing the start-at-boot init.d daemon with one of your own!</strong>
 
@@ -132,24 +132,23 @@ Make it executable for the user group containing the www-data and your deploy us
 		exec node app.js
 
 
- Reboot the web server:  
+Reboot the web server:  
 
 
  		$ sudo nginx -s reload
 
-
- Spawn the daemon:   
+Spawn the daemon:   
 
 
  		$ sudo service nodeapp start
 
-the npm script
+The npm script
 
 
  	$ npm run deploy
 
 
-will deploy changes.
+will deploy changes. Make sure that you don't follow the standard "npm" instructions of placing your binary, also known as deployscript.sh or scpscript.sh, in project_root/node_modules/.bin/scpscript.sh, along with "scripts": { "deploy": "scpscript.sh" } because *node_modules is git-ignored.* So place that script in project root, "scripts": { "deploy": "./scpscript.sh" }
 
 
 # Final result: public IP and curl results for AWS:

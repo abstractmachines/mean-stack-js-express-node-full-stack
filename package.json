@@ -8,7 +8,7 @@
     "start_0": "node app.js",
     "start_1": "PORT=3100 node app.js",
     "test": "mocha",
-    "deploy": "scpscript.sh"
+    "deploy": "./scpscript.sh"
   },
   "repository": {
     "type": "git",
