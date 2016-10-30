@@ -111,9 +111,9 @@ Create the conf file: Where nodeapp is the name of your app's directory:
 
 Make it executable for the user group containing the www-data and your deploy users:
 
-  ```
- 		$ chmod u+x conf-file // similar to this
-		```
+```
+$ chmod u+x conf-file // similar to this
+```
 
 
  Set the proper Linux runlevels. Odd levels are for shutdown-related stuff, and even levels are for startup-related stuff. You'll also need to  setuid to your deploy user and set the proper directory :
@@ -134,19 +134,22 @@ Make it executable for the user group containing the www-data and your deploy us
 
 Reboot the web server:  
 
-
- 		$ sudo nginx -s reload
+```
+ $ sudo nginx -s reload
+```
 
 Spawn the daemon:   
 
+```
+$ sudo service nodeapp start
+```
 
- 		$ sudo service nodeapp start
 
 The npm script
 
-
- 	$ npm run deploy
-
+```
+$ npm run deploy
+```
 
 will deploy changes. Make sure that you don't follow the standard "npm" instructions of placing your binary, also known as deployscript.sh or scpscript.sh, in project_root/node_modules/.bin/scpscript.sh, along with "scripts": { "deploy": "scpscript.sh" } because *node_modules is git-ignored.* So place that script in project root, "scripts": { "deploy": "./scpscript.sh" }
 
@@ -155,15 +158,18 @@ And test this by cloning into a new directory, pulling down changes, and running
 
 # Final result: public IP and curl results for AWS:
 
-      $  curl -X POST -d
-			name=GobBluthBeesHowHardCanItBe
-			 http://54.148.122.112:5001/foo
-			 -H "Content-Type: text/plain"
+```
+$  curl -X POST -d
+name=GobBluthBeesHowHardCanItBe
+http://54.148.122.112:5001/foo
+-H "Content-Type: text/plain"
+```
 
 Response received:
 
-			name=GobBluthBeesHowHardCanItBe
-
+```
+name=GobBluthBeesHowHardCanItBe
+```
 
 Success!
 
