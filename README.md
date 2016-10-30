@@ -150,6 +150,8 @@ The npm script
 
 will deploy changes. Make sure that you don't follow the standard "npm" instructions of placing your binary, also known as deployscript.sh or scpscript.sh, in project_root/node_modules/.bin/scpscript.sh, along with "scripts": { "deploy": "scpscript.sh" } because *node_modules is git-ignored.* So place that script in project root, "scripts": { "deploy": "./scpscript.sh" }
 
+And test this by cloning into a new directory, pulling down changes, and running npm run deploy. Should be successful.
+
 
 # Final result: public IP and curl results for AWS:
 
