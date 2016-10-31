@@ -43,7 +43,9 @@ Hand out a public IP which can be hit with a curl request.
 7. Recreate that process with a bash script to fire up Node; compare program exit codes with conditionals, and capture the output of the command in a variable. *re: verifyscript.sh*
 
 8. Deploy on AWS Linux Ubuntu EC2 VM instance.
-<br><br> <strong>First you have to install Node: </strong> <br>
+<br><br> This will involve setting up the virtual Ubuntu machine (14.04) using the AWS Console as well as selecting appropriate security groups. This will also involve setting up a new or existing key pair for secure SSH. Server user administration should not involve logging in with a password; instead, allow users access via their keys, and remove their access by removing their keys. Once an AWS EC2 Ubuntu instance is up and running, you can install desired software using appropriate package management tools, as follows.
+
+ <strong>First you have to install Node: </strong> <br>
 I chose to install Node on AWS using nvm instead of using Debian's apt-get package manager to install Node. That's because nvm helps you manage specific versions of Node on a per-project basis. As with all npm-related projects, the point of a per-project package manager includes project-directory installations of software packages/versions *instead of global installs.*
 
 		 $ nvm script
