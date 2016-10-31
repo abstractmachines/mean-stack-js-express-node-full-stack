@@ -45,6 +45,26 @@ Hand out a public IP which can be hit with a curl request.
 8. Deploy on AWS Linux Ubuntu EC2 VM instance.
 <br><br> This will involve setting up the virtual Ubuntu machine (14.04) using the AWS Console as well as selecting appropriate security groups. This will also involve setting up a new or existing key pair for secure SSH. Server user administration should not involve logging in with a password; instead, allow users access via their keys, and remove their access by removing their keys. Once an AWS EC2 Ubuntu instance is up and running, you can install desired software using appropriate package management tools, as follows.
 
+Getting started on AWS EC2 Ubuntu will involve downloading your private key keyname.pem, putting it in:
+```
+~/.ssh/keyname.pem
+```
+Changing the permissions using chmod so that your private key isn't publicly available:
+```
+$ chmod 400 /path/to/keyname.pem
+```
+Shelling in using optarg -i for identity. Note that for Amazon EC2 Ubuntu instances, the  username will not be *user* like the AMI AWS instances; rather, it will be *ubuntu*.
+```
+$ ssh -i /path/to/keyname.pem user@AWSpublicDNS
+```
+Scp a file to user's home ~/. Note that we aren't using rsync at this time.
+```
+$ scp -i /path/to/keyname.pem /path/file.txt user@AWSpublicDNS:~
+```
+User management follows in "step 3" of AWS process documented here. You don't want users to have to have your private key to login, of course. You'll also note that we have a "deploy user" for purposes of this simple Vertical Slice full stack app, but generally <strong>Jenkins</strong> or a similar continuous integration solution would deploy, not a user.
+
+ <strong>Once you're set up and have AWS Access:
+
  <strong>First you have to install Node: </strong> <br>
 I chose to install Node on AWS using nvm instead of using Debian's apt-get package manager to install Node. That's because nvm helps you manage specific versions of Node on a per-project basis. As with all npm-related projects, the point of a per-project package manager includes project-directory installations of software packages/versions *instead of global installs.*
 
@@ -101,19 +121,45 @@ To do this, you will need to work with nginx's <strong>sshd_config</strong> file
 <strong>To add a user,</strong> You can use the commands <strong>useradd</strong> or <strong>adduser.</strong> *"On Debian, administrators should usually <strong>use adduser(8)</strong> instead"* (http://askubuntu.com/questions/345974/what-is-the-difference-between-adduser-and-useradd). We will make a new user for GOB Bluth.
 
 
-		$ sudo useradd gobbluth
+		$ sudo adduser gobbluth
 
 
 Check the user group.
 
 
 ```
-		$ sudo id gobbluth
+		$  id gobbluth
 ```
 
-  Add user to appropriate group. I can't remember this step, but it involves something like this: http://www.howtogeek.com/50787/add-a-user-to-a-group-or-second-group-on-linux/.
+  Add user to appropriate group. It involves something like this: ' sudo -a -G groupname username'... the options -a -G ADDS a user to a Group. http://www.howtogeek.com/50787/add-a-user-to-a-group-or-second-group-on-linux/.
+```
+$ sudo groupadd newGroupName
 
-After you add a user, set a password for that user, and add the user to the appropriate group, you'll need to copy the public key for that user to the authorized keys directory for that user. *Check back with the numbered list items for user management above to ensure you went through all the steps. If you want another user to assume deploy, you'll have to copy that user's public key into the authorized_keys file for that user. Note that we normally wouldn't have a user deploying code, we'd use Jenkins or similar CI.*
+$ sudo -aG newGroupName gobbluth
+```
+For example, to make a user a sudoer:
+```
+$ sudo groupadd newGroupName
+
+$ sudo -a -G newGroupName gobbluth
+
+// check your work:
+$ id gobbluth
+// should say gobbluth is a sudoer.
+```
+
+Another example, to make a user belong to the same group that www-data belongs to in order to create appropriate deployment permissions for our deploy user:
+```
+$ id www-data
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+$ sudo -a -G www-data gobbluth
+// check your work:
+$ id gobbluth
+// should say gobbluth is a member of www-data group!
+```
+
+After you add a user and group, set a password for that user, and add the user to the appropriate group, you'll need to copy the public key for that user to the authorized keys directory for that user. *Check back with the numbered list items for user management above to ensure you went through all the steps. If you want another user to assume deploy, you'll have to copy that user's public key into the authorized_keys file for that user. Note that we normally wouldn't have a user deploying code, we'd use Jenkins or similar CI.*
 
 <strong>Fourth, you have to spin up a service by hand on the AWS EC2 Ubuntu instance using upstart daemon, make it executable, and set the proper Linux run levels. Of course, a sudoer must complete all of these tasks, not your deploy user. You're replacing the start-at-boot init.d daemon with one of your own!</strong>
 
