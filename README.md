@@ -159,7 +159,7 @@ $ id gobbluth
 // should say gobbluth is a member of www-data group!
 ```
 
-After you add a user and group, set a password for that user, and add the user to the appropriate group, you'll need to copy the public key for that user to the authorized keys directory for that user. *Check back with the numbered list items for user management above to ensure you went through all the steps. If you want another user to assume deploy, you'll have to copy that user's public key into the authorized_keys file for that user. Note that we normally wouldn't have a user deploying code, we'd use Jenkins or similar CI.*
+<strong>After you add a user and group, set a password for that user, and add the user to the appropriate group, you'll need to copy the public key for that user to the authorized keys directory for that user. </strong> *Check back with the numbered list items for user management above to ensure you went through all the steps. If you want another user to assume deploy, you'll have to copy that user's public key into the authorized_keys file for that user. Note that we normally wouldn't have a user deploying code, we'd use Jenkins or similar CI.*
 
 <strong>Fourth, you have to spin up a service by hand on the AWS EC2 Ubuntu instance using upstart daemon, make it executable, and set the proper Linux run levels. Of course, a sudoer must complete all of these tasks, not your deploy user. You're replacing the start-at-boot init.d daemon with one of your own!</strong>
 
