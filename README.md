@@ -71,23 +71,24 @@ I chose to install Node on AWS using nvm instead of using Debian's apt-get packa
 	 Set and manage shell users and permissions on EC2 instance. Your deploy user cannot be a sudo-er. You want to restrict permissions and be conservative.
 
 	 Recall permissions are in binary/hex as such. Here is an example of our users group being able to read, write and execute, and everyone else can just read:
-	 ```
-	 User 'u'    Group 'g'    Others 'o'
-	 r w x        r - -      r - -
-	 1 1 1        1 0 0      1 0 0
-	   7            4          4
-		 ```
+```
+User 'u'    Group 'g'    Others 'o'
+r w x        r - -      r - -
+1 1 1        1 0 0      1 0 0
+  7            4          4
+```
 
-	 <strong>All users should be logging in with public/private keys, not with passwords.</strong>
 
-	 To do this, you will need to work with nginx's <strong>sshd_config</strong> file to:
-	 1. temporarily enable password logins (change "no" to "yes") to set the proper public/private keys by
-	 2. copying the keys from local to AWS via  <strong>ssh-copy-id.</strong>
-	 3. Once you're done setting up keys and access on the server, ensure that you disable password authentication (change it to no in aforementioned server settings).
-	 4. Try it out, you should be able to shell in without passwords.
-	 5. Note that the <strong>USER GROUP for your deploy user,</strong> and it should be in the <strong> same user group as www-data.</strong>
+<strong>All users should be logging in with public/private keys, not with passwords.</strong>
 
-	 Set permissions as required, and remember, permissions are conservative, and restricted.
+To do this, you will need to work with nginx's <strong>sshd_config</strong> file to:
+ 1. temporarily enable password logins (change "no" to "yes") to set the proper public/private keys by
+ 2. copying the keys from local to AWS via  <strong>ssh-copy-id.</strong>
+ 3. Once you're done setting up keys and access on the server, ensure that you disable password authentication (change it to no in aforementioned server settings).
+ 4. Try it out, you should be able to shell in without passwords.
+ 5. Note that the <strong>USER GROUP for your deploy user,</strong> and it should be in the <strong> same user group as www-data.</strong>
+
+	Set permissions as required, and remember, permissions are conservative, and restricted.
 
 	 Here are some details on the user management I did:
 
