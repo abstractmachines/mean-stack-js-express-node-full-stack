@@ -68,7 +68,17 @@ I chose to install Node on AWS using nvm instead of using Debian's apt-get packa
  Note that with the above, yourappdirectory will read nodeapp for us in the future.
 
   <strong>Third, you have to set up the proper users, groups, and permissions. </strong>
-	 Set and manage shell users and permissions on EC2 instance. Your deploy user cannot be a sudo-er. You want to restrict permissions and be conservative. All users should be logging in with public/private keys, not with passwords.
+	 Set and manage shell users and permissions on EC2 instance. Your deploy user cannot be a sudo-er. You want to restrict permissions and be conservative.
+
+	 Recall permissions are in binary/hex as such. Here is an example of our users group being able to read, write and execute, and everyone else can just read:
+	 ```
+	 User 'u'    Group 'g'    Others 'o'
+	 r w x        r - -      r - -
+	 1 1 1        1 0 0      1 0 0
+	   7            4          4
+		 ```
+
+	 <strong>All users should be logging in with public/private keys, not with passwords.</strong>
 
 	 To do this, you will need to work with nginx's <strong>sshd_config</strong> file to:
 	 1. temporarily enable password logins (change "no" to "yes") to set the proper public/private keys by
