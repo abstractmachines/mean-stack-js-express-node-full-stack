@@ -61,9 +61,9 @@ Scp a file to user's home ~/. Note that we aren't using rsync at this time.
 ```
 $ scp -i /path/to/keyname.pem /path/file.txt user@AWSpublicDNS:~
 ```
-User management follows in "step 3" of AWS process documented here. You don't want users to have to have your private key to login, of course. You'll also note that we have a "deploy user" for purposes of this simple Vertical Slice full stack app, but generally <strong>Jenkins</strong> or a similar continuous integration solution would deploy, not a user.
+User management follows in "step 3" of AWS process documented here. You don't want users to have to have your private key to login, of course. You'll also note that we have a "deploy user" for purposes of this simple Vertical Slice full stack app, but generally <strong>Jenkins</strong> or a similar continuous integration solution would deploy, not a user. <strong> You really don't want to setup your server as the "ubuntu" user, so strongly consider skipping ahead here to the user management stuff in step 3.</strong>
 
- <strong>Once you're set up and have AWS Access:</strong>
+ <strong>Once you're set up properly with users, and have AWS access both as a non-ubuntu-username sudoer AND as a non-sudoer 'deploy' user that's in the same group as www-data:</strong>
 
  <strong>First you have to install Node: </strong> <br>
 I chose to install Node on AWS using nvm instead of using Debian's apt-get package manager to install Node. That's because nvm helps you manage specific versions of Node on a per-project basis. As with all npm-related projects, the point of a per-project package manager includes project-directory installations of software packages/versions *instead of global installs.*
@@ -90,7 +90,7 @@ I chose to install Node on AWS using nvm instead of using Debian's apt-get packa
   <strong>Third, you have to set up the proper users, groups, and permissions. </strong>
 	 Set and manage shell users and permissions on EC2 instance. Your deploy user cannot be a sudo-er. You want to restrict permissions and be conservative.
 
-	 Recall permissions are in binary/hex as such. Here is an example of our users group being able to read, write and execute, and everyone else can just read:
+Recall permissions are in binary/hex as such. Here is an example of our users group being able to read, write and execute, and everyone else can just read:
 ```
 User 'u'    Group 'g'    Others 'o'
 r w x        r - -      r - -
@@ -101,8 +101,8 @@ r w x        r - -      r - -
 
 <strong>All users should be logging in with public/private keys, not with passwords.</strong>
 
-To do this, you will need to work with nginx's <strong>sshd_config</strong> file to:
- 1. temporarily enable password logins (change "no" to "yes") to set the proper public/private keys by
+To do this, you will need to work with Ubuntu's <strong>sshd_config</strong> OpenSSH daemon config file to:
+ 1. temporarily enable password logins (change "no" to "yes") to set the proper public/private keys
  2. copying the keys from local to AWS via  <strong>ssh-copy-id.</strong>
  3. Once you're done setting up keys and access on the server, ensure that you disable password authentication (change it to no in aforementioned server settings).
  4. Try it out, you should be able to shell in without passwords.
@@ -112,32 +112,107 @@ To do this, you will need to work with nginx's <strong>sshd_config</strong> file
 
 	 Here are some details on the user management I did:
 
-	To see what users are on Debian:
+	 Set Ubuntu's sshd_config file to accept password authentication type: Do this for your non-"ubuntu-username" sudoer user:
 
+	 ```
+	 $ cd /etc/ssh
+   $ sudo vim sshd_config
 
-		 $ cat /etc/passwd
+   # Change to no to disable tunnelled clear text passwords
+PasswordAuthentication no
+	 ```
+   Change that line to say yes:
+   ```
+   PasswordAuthentication yes
+   ```
+   Make an ssh directory for your user and change permissions to rwx for user:
+   ```
+   $ mkdir ~/.ssh
+   $ chmod 700 ~/.ssh
+   // confirm permissions with $ ls -al
+   ```
+   The file that ssh-copy-id will create is in this ~/.ssh directory and it will be named authorized_keys.
 
+   Before we use ssh-copy-id, we will need to restart the ssh service that we just changed the configuration for. Ubuntu calls the service ssh, not sshd:
+   ```
+   $ sudo service ssh restart
+   ssh stop/waiting
+   ssh start/running, process 12345
+   ```
 
-<strong>To add a user,</strong> You can use the commands <strong>useradd</strong> or <strong>adduser.</strong> *"On Debian, administrators should usually <strong>use adduser(8)</strong> instead"* (http://askubuntu.com/questions/345974/what-is-the-difference-between-adduser-and-useradd). We will make a new user for GOB Bluth.
+   ssh-copy-id from local to remote. If you don't use -i option, ssh-copy-id just defaults to ~/.ssh/authorized_keys.
+   ```
+   $ ssh-copy-id gobbuth@awspublicIP
+   ....INFO: 1 key(s) remain to be installed --
+    if you are prompted now it is to install the new keys
+   ```
+   Now the system will prompt you for the user's password, ONCE. Note, you're not using it to login to the server. You're using it so that ssh-copy-id works once:
+   ```
+   gobbluth@AWSpublicIP's password:
+   ```
+   Enter the user's password, then you'll see:
 
+   ```
+   Number of key(s) added:       
+    1
 
-		$ sudo adduser gobbluth
+   Now try logging into the machine, with:
+    "ssh 'gobbluth@AWSPublicIP'"
+   and check to make sure that only the key(s)
+   you wanted were added.
+   ```
+   Close. You want to ssh with verbose -v option selected. It's just really fun to see the options you configured in Ubuntu's sshd OpenSSH daemon configuration file here:
+   ```
+   $ ssh -v gobbluth$AWSPublicIP
+   ```
+   Then you'll see this:
+   ```
+   debug1: Reading configuration data /etc/ssh/ssh_config
+   ```
+   ...followed by a TON of stuff..
+   ...eventually you'll see something like the following. It's telling you that both password authentication and keypair authentication are enabled on the server, and that you're authenticated (you hipster you):
+   ```
+   debug1: Authentications that can continue: publickey,password
+   debug1: Next authentication method: publickey
+   debug1: Offering RSA public key: /Users/yourLocalUser/.ssh/id_rsa
+   debug1: Server accepts key: blah blah blah
+   debug1: Authentication succeeded (publickey).
+   Authenticated to AWSPUblicIP
+   ... Welcome to Ubuntu.
+   ```
+   Then we disable passwd authentication:
+   ```
+   $ cd /etc/ssh
+   $ sudo vim sshd_config
+   //password authentication yes
+   //change to no
+   //save
+   $ sudo service ssh restart
+   ```
+   <strong> And that's how you set up and administer Linux users for keypair authentication rather than passwd authentication. Test it out by shelling into the server from your local machine simply using the ssh command followed by your server username@awspublicIP. Now we can look at further user admin:</strong>
 
+   To see what users are on Debian:
+   ```
+   $ cat /etc/passwd
+   ```
+   <strong>To add a user,</strong> You can use the commands <strong>useradd</strong> or <strong>adduser.</strong> *"On Debian, administrators should usually <strong>use adduser(8)</strong> instead"* (http://askubuntu.com/questions/345974/what-is-the-difference-between-adduser-and-useradd). We will make a new user for GOB Bluth.
+   ```
+   $ sudo adduser gobbluth
+   ```
 
-Check the user group.
-
-
-```
+   Check the user group.
+   ```
 		$  id gobbluth
-```
+   ```
 
   Add user to appropriate group. It involves something like this: ' sudo -a -G groupname username'... the options -a -G ADDS a user to a Group. http://www.howtogeek.com/50787/add-a-user-to-a-group-or-second-group-on-linux/.
-```
-$ sudo groupadd newGroupName
 
+  ```
+$ sudo groupadd newGroupName
 $ sudo -a -G newGroupName gobbluth
 ```
 For example, to make a user a sudoer:
+
 ```
 $ sudo groupadd newGroupName
 
