@@ -63,7 +63,7 @@ $ scp -i /path/to/keyname.pem /path/file.txt user@AWSpublicDNS:~
 ```
 User management follows in "step 3" of AWS process documented here. You don't want users to have to have your private key to login, of course. You'll also note that we have a "deploy user" for purposes of this simple Vertical Slice full stack app, but generally <strong>Jenkins</strong> or a similar continuous integration solution would deploy, not a user.
 
- <strong>Once you're set up and have AWS Access:
+ <strong>Once you're set up and have AWS Access:</strong>
 
  <strong>First you have to install Node: </strong> <br>
 I chose to install Node on AWS using nvm instead of using Debian's apt-get package manager to install Node. That's because nvm helps you manage specific versions of Node on a per-project basis. As with all npm-related projects, the point of a per-project package manager includes project-directory installations of software packages/versions *instead of global installs.*
@@ -135,7 +135,7 @@ Check the user group.
 ```
 $ sudo groupadd newGroupName
 
-$ sudo -aG newGroupName gobbluth
+$ sudo -a -G newGroupName gobbluth
 ```
 For example, to make a user a sudoer:
 ```
