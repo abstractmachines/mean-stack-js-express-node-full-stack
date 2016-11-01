@@ -137,7 +137,7 @@ PasswordAuthentication no
    ```
    Close. You want to ssh with verbose -v option selected. It's just really fun to see the options you configured in Ubuntu's sshd OpenSSH daemon configuration file here:
    ```
-   $ ssh -v gobbluth$AWSPublicIP
+   $ ssh -v gobbluth@AWSPublicIP
    ```
    Then you'll see this:
    ```
