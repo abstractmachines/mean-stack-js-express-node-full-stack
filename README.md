@@ -210,7 +210,7 @@ $ id gobbluth
 
 <strong>After you add a user and group, set a password for that user, and add the user to the appropriate group, you'll need to copy the public key for that user to the authorized keys directory for that user. </strong> *Check back with the numbered list items for user management above to ensure you went through all the steps. If you want another user to assume deploy, you'll have to copy that user's public key into the authorized_keys file for that user. Note that we normally wouldn't have a user deploying code, we'd use Jenkins or similar CI.*
 
- <strong>Once you're set up properly with users, install git and curl:</strong>
+ <strong>Once you're set up properly with users, install git and curl using the Debian distro's apt installer :</strong>
  ```
  $ sudo apt-get install curl git
  ```
