@@ -151,7 +151,7 @@ PasswordAuthentication no
    debug1: Offering RSA public key: /Users/yourLocalUser/.ssh/id_rsa
    debug1: Server accepts key: blah blah blah
    debug1: Authentication succeeded (publickey).
-   Authenticated to AWSPUblicIP
+   Authenticated to AWSPublicIP
    ... Welcome to Ubuntu.
    ```
    Then we disable passwd authentication:
